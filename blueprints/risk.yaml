@@ -14,7 +14,7 @@ grains:
         name: eks
       inputs:
         - region: us-west-1
-        - acl: public-read-write
+        - acl: public-read-write-123
         - name: 'test-bucket-1-s3-{{ sandboxid | downcase }}'
       outputs:
         - s3_bucket_arn
