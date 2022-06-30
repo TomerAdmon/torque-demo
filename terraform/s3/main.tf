@@ -10,7 +10,6 @@ terraform {
 # one more line
 provider "aws" {
   region = var.region
-  # one line
 }
 
 data "aws_iam_user" "input_user" {
@@ -27,6 +26,7 @@ resource "aws_s3_bucket" "bucket" {
     Name        = "My bucket"
     Environment = "Dev"
     AMAZING_TAG = "AMAZING_VALUE"
+      # one line
   }
 }
 
