@@ -5,6 +5,7 @@ inputs:
   acl:
     type: string
     default: "private"
+    description: "S3 bucket ACL"
     
 outputs:
   bucket:
