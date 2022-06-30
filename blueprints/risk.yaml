@@ -1,12 +1,7 @@
 spec_version: 2
 description: Simple s3 buckets provisioning
 
-inputs:
-  acl:
-    type: string
-    default: "private"
-    description: "S3 bucket ACL"
-    
+   
 outputs:
   bucket:
     value: '{{ .grains.bucket.outputs.s3_bucket_arn }}'
@@ -21,7 +16,7 @@ grains:
         name: eks
       inputs:
         - region: us-west-1
-        - acl: '{{ .inputs.acl }}'
+        - acl: "private"
         - name: 'test-bucket-1-s3-{{ sandboxid | downcase }}'
       outputs:
         - s3_bucket_arn
