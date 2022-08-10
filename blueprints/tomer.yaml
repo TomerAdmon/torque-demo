@@ -33,7 +33,7 @@ grains:
     kind: shell
     spec:
       host:
-        name: kubernetes-testing1
+        name: tomer-cloud
       activities:
         deploy:
           commands:
@@ -52,7 +52,7 @@ grains:
     depends-on: validate
     spec:
       host:
-        name: kubernetes-testing1
+        name: tomer-cloud
       source:
         path: github.com/QualiNext/test-spec2-public.git//manifests/nginx1/nginxmanifest-fixed.yaml
       namespace: '{{ .inputs.namespace }}'
@@ -61,7 +61,7 @@ grains:
     kind: shell
     spec:
       host:
-        name: kubernetes-testing1
+        name: tomer-cloud
       activities:
         deploy:
           commands:
