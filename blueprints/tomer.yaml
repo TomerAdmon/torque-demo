@@ -1,5 +1,32 @@
-spec_version: 2
-description: Blueprint for bitnami nginx helm chart 
+kind: bluperint 
+spec_version: 2-preview
+description: validating a k8s deployment file and then deploy it
+
+
+inputs:
+  repoUrl:
+    type: string
+    display-style: normal
+    default: "http://github.com/QualiNext/test-spec2-public"
+    description: "path to the repo to clone"
+
+  repoName:
+    type: string
+    display-style: normal
+    default: "test-spec2-public"
+    description: "the repo's name"
+
+  filePath:
+    type: string
+    display-style: normal
+    default: "manifests/nginx1/nginxmanifest-fixed.yaml"
+    description: "the file name in the repo"
+
+  namespace:
+    type: string
+    display-style: normal
+    default: "meir-sandboxes"
+    description: "Kubernetes namespace for sandbox to be ran in"
 
 grains:
   validate:
@@ -16,5 +43,28 @@ grains:
             - "datree test {{.inputs.repoName}}/{{.inputs.filePath}}"
         destroy:
           commands:
-            - "https://gist.githubusercontent.com/.../check.py"
+            - "apt-get -y install wget"
+            - "wget https://gist.githubusercontent.com/MeirAtWork/b7cd33fe4fa1e30f599e1199587a8da7/raw/2ff145d67ef75bf3d735147f45a28f58d34a0b53/check.py"
             - "python3 check.py"
+
+  installNginx:
+    kind: kubernetes
+    depends-on: validate
+    spec:
+      host:
+        name: kubernetes-testing1
+      source:
+        path: github.com/QualiNext/test-spec2-public.git//manifests/nginx1/nginxmanifest-fixed.yaml
+      namespace: '{{ .inputs.namespace }}'
+
+  clean:
+    kind: shell
+    spec:
+      host:
+        name: kubernetes-testing1
+      activities:
+        deploy:
+          commands:
+            - "apt-get -y install wget"
+            - "wget https://raw.githubusercontent.com/MeirAtWork/AppScripts/main/simple.sh"
+            - "/bin/bash simple.sh"
