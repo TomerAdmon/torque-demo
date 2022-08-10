@@ -1,0 +1,20 @@
+spec_version: 2
+description: Blueprint for bitnami nginx helm chart 
+
+grains:
+  validate:
+    kind: shell
+    spec:
+      host:
+        name: kubernetes-testing1
+      activities:
+        deploy:
+          commands:
+            - "apt-get -y install git unzip curl"
+            - "git clone {{ .inputs.repoUrl }}"
+            - "curl https://get.datree.io | /bin/bash"
+            - "datree test {{.inputs.repoName}}/{{.inputs.filePath}}"
+        destroy:
+          commands:
+            - "https://gist.githubusercontent.com/.../check.py"
+            - "python3 check.py"
