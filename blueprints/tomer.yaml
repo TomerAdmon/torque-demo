@@ -47,6 +47,23 @@ grains:
             - "wget https://gist.githubusercontent.com/MeirAtWork/b7cd33fe4fa1e30f599e1199587a8da7/raw/2ff145d67ef75bf3d735147f45a28f58d34a0b53/check.py"
             - "python3 check.py"
 
+  prints:
+    kind: shell
+    spec:
+      host:
+        name: tomer-cloud
+      env-vars:
+        - VAR_NAME1: value1
+        - VAR_NAME2: my amazing value with spaces
+        - lower_case2: my amazing value with spaces
+      activities:
+        deploy:
+          commands:
+            - printenv
+        destroy:
+          commands:
+            - printenv
+            
   installNginx:
     kind: kubernetes
     depends-on: validate
